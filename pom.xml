@@ -148,7 +148,9 @@
                     <configuration>
                         <serverId>ossrh</serverId>
                         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>true</autoReleaseAfterClose>                        
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>                      
+                        <!-- staging profile for trentorise -->
+                        <stagingProfileId>22a378cae109c1</stagingProfileId>  
                     </configuration>
                     
                 </plugin>                
