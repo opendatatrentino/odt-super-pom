@@ -151,6 +151,8 @@
                         <!-- references the profile defined just below -->
                         <releaseProfiles>release</releaseProfiles>
                         <goals>deploy</goals>
+                        
+                        <arguments>-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true</arguments>
                     </configuration>
                 </plugin>                     
 
