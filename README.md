@@ -31,7 +31,9 @@ and copy plugins list like in [Odt Commons pom](https://github.com/opendatatrent
                 <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>             
             <plugin>
-...
+
+    ...
+
     </build>
 ```
 
