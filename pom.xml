@@ -110,7 +110,47 @@
                             </execution>
                         </executions>
                     </plugin>
+                    
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version></version>
+                    
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                        
+                    
+                    </plugin>                
+                
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.5</version>
+                        <extensions>true</extensions>
+                    
+                        <executions>
+                            <execution>
+                                <id>default-deploy</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                                        
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>                      
+                            <!-- staging profile for trentorise -->
+                            <stagingProfileId>22a378cae109c1</stagingProfileId>  
+                        </configuration>
+                    
+                    
+                    </plugin>                                 
                 </plugins>
+
             </build>
         </profile>
     </profiles>        
@@ -140,20 +180,7 @@
                     <version>2.4</version>
                 </plugin>
                 
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.5</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>true</autoReleaseAfterClose>                      
-                        <!-- staging profile for trentorise -->
-                        <stagingProfileId>22a378cae109c1</stagingProfileId>  
-                    </configuration>
-                    
-                </plugin>                
+                       
                 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
