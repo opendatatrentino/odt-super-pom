@@ -13,8 +13,9 @@ if NOT [%2]==[] goto usage
 @ECHO.
 @ECHO Preparing release...
 @ECHO.
-@echo on
-mvn -DpushChanges=false release:clean release:prepare
+@ECHO on
+CALL mvn -DpushChanges=false release:clean release:prepare
+@ECHO off
 @ECHO.
 @ECHO.
 @ECHO.
@@ -34,8 +35,8 @@ git push origin %1
 @ECHO Performing release...
 @ECHO.
 @echo on
-mvn release:perform
-@echo off
+CALL mvn release:perform
+@ECHO off
 @ECHO.
 @ECHO.
 @ECHO Done.
@@ -53,13 +54,16 @@ if NOT [%3]==[] goto usage
 git tag -d %2
 @echo off
 @ECHO Removing github tag %2  ...
-@echo on
+@ECHO on
+@ECHO.
 git push origin :refs/tags/%2
-@echo off
-@ECHO Removing  pom.xml.releaseBackup
+@ECHO. off
+@ECHO.
+@ECHO Removing  pom.xml.releaseBackup ...
 DEL  pom.xml.releaseBackup
 @ECHO Removing release.properties
 DEL release.properties
+@ECHO.
 @ECHO.
 @ECHO Now you may need to do a 
 @ECHO.
@@ -77,10 +81,10 @@ if NOT [%2]==[] goto usage
 @ECHO *******  REGULAR MAVEN ROLLABACK....
 @ECHO.
 @ECHO.
-@echo on
-mvn release:rollback
-mvn release:clean
-@echo off
+@ECHO on
+CALL mvn release:rollback
+CALL mvn release:clean
+@ECHO off
 @ECHO.
 GOTO :eof
 :usage
