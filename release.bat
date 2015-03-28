@@ -13,22 +13,30 @@ if NOT [%2]==[] goto usage
 @ECHO.
 @ECHO Preparing release...
 @ECHO.
+@echo on
 mvn -DpushChanges=false release:clean release:prepare
+@echo off
 @ECHO.
 @ECHO.
 @ECHO.
 @ECHO Pushing to master...
 @ECHO.
+@ECHO on
 git push origin master
+@ECHO off
 @ECHO.
 @ECHO.
 @ECHO Pushing tag %1 to repository...
+@ECHO on
 git push origin %1
+@ECHO off
 @ECHO.
 @ECHO.
 @ECHO Performing release...
 @ECHO.
+@echo on
 mvn release:perform
+@echo off
 @ECHO.
 @ECHO.
 @ECHO Done.
@@ -42,9 +50,13 @@ if NOT [%3]==[] goto usage
 @ECHO.
 @ECHO.
 @ECHO Removing local tag %2  ...
+@echo on
 git tag -d %2
+@echo off
 @ECHO Removing github tag %2  ...
+@echo on
 git push origin :refs/tags/%2
+@echo off
 @ECHO Removing  pom.xml.releaseBackup
 DEL  pom.xml.releaseBackup
 @ECHO Removing release.properties
@@ -59,16 +71,17 @@ DEL release.properties
 @ECHO ****  CAREFUL: USING GIT RESET HARD WITH WRONG COMMIT WILL MAKE YOU LOSE ALL SUBSEQUENT COMMITS!!!!! *****
 @ECHO.
 GOTO :eof
-:maven-rollback
+:maven-rollback 
 if NOT [%2]==[] goto usage
 @ECHO.
 @ECHO.
 @ECHO *******  REGULAR MAVEN ROLLABACK....
 @ECHO.
 @ECHO.
+@echo on
 mvn release:rollback
-@ECHO Cleaning....
 mvn release:clean
+@echo off
 @ECHO.
 GOTO :eof
 :usage
