@@ -15,7 +15,6 @@ if NOT [%2]==[] goto usage
 @ECHO.
 @echo on
 mvn -DpushChanges=false release:clean release:prepare
-@echo off
 @ECHO.
 @ECHO.
 @ECHO.
