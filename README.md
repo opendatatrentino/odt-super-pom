@@ -8,13 +8,16 @@ For common library toolkit see [Odt Commons](https://github.com/opendatatrentino
 
 [Usage](#usage)
 
-[Releasing](#releasing)
+[Deploy Prerequisites](#deploy-prerequisites)
 
+[Deploy snapshots](#deploy-snapshots)
+
+[Release](#release)
 ___________________________
 
 ### Usage
 
-Releases of the POM are on Central. To use it, just write this in your project
+Releases of the POM are on Central. To use it in your project, just write this in your project
 
 ```
     <parent>
@@ -44,18 +47,19 @@ and copy plugins list like in [Odt Commons pom](https://github.com/opendatatrent
     </build>
 ```
 
-### Releasing
+TODO put other things to copy!!!
+
+### Deploy prerequisites
 
 So far we only tried releasing from a Windows environment. Since Windows, Maven, Git and GPG don't play well together, we resorted to putting passwords in clear in maven `.m2/settings.xml` (which is not much secure..) and made a `bat` script to ease the process.
 
-To Relase any odt project, you need to:
+To deploy to Sonatype any odt project, you need this prerequisites:
 
 1. Register on sonatype to have username/passoword.
 2. Create GPG keys
 3. Edit Maven `.m2/settings.xml` in your user home
-4. Run `release.bat`
 
-First three steps are only needed once for all the projects you might need to maintain.
+These three steps are only needed once for all the projects you might need to maintain.
 
 #### 1. Register to Sonatype
 
@@ -66,9 +70,6 @@ TODO write something
 TODO write something
 
 #### 3. Edit Maven settings.xml
-
-
-In the 	`<profiles>` section of `.m2/settings.xml` of your user home, put this (NOTE: maybe this is not needed in Linux/mac):
 
 
 Put this in the `<servers>` section in `.m2/settings.xml` of your user home:
@@ -94,7 +95,7 @@ Put this in the `<servers>` section in `.m2/settings.xml` of your user home:
 
 ```
 
-Put this in the `profiles` section in `.m2/settings.xml` of your user home:
+Put this in the `<profiles>` section in `.m2/settings.xml` of your user home:
 
 ```
 	<profile>
@@ -109,7 +110,29 @@ Put this in the `profiles` section in `.m2/settings.xml` of your user home:
 	</profile>
 ```
 
-#### 3. Run release.bat
+### Deploy snapshots
+
+Before attempting deployment, make sure you meet the [Deploy prerequisites](#deploy-prerequisites).
+
+Snapshots are deployed on Sonatype:
+<a href="https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/" target="_blank">https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/odt-super-pom/</a>
+
+with this command:
+
+```
+    mvn clean deploy
+```
+
+In Netbeans, you can also:
+
+```
+right click on the project -> Custom -> Deploy to Sonatype
+```
+
+
+### Release
+
+Before attempting release, make sure you meet the [Deploy prerequisites](#deploy-prerequisites).
 
 So far we only tried releasing from a Windows environment. Since Windows, Maven and Git don't play well together, we made a [release.bat file](release.bat) to ease the process. You can use the bat for this or other odt projects.
 
@@ -119,7 +142,7 @@ To print help, just type the command:
 release.bat
 ```
 
-To release `my-program` with version `1.2.3` , from your project root run
+To release `my-program` with version `1.2.3` , from your project root run `release.bat` followed by the release tag:
 ```
 path\to\release.bat my-program-1.2.3
 ```
@@ -129,4 +152,4 @@ If something goes wrong along the way just run `release.bat` to see help on how 
 
 #### Credits
 
-* David Leoni - DISI at University of Trento - david.leoni@unitn.it
+* David Leoni - DISI, University of Trento - david.leoni@unitn.it

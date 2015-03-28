@@ -16,6 +16,7 @@ if NOT [%2]==[] goto usage
 @ECHO on
 CALL mvn -DpushChanges=false release:clean release:prepare
 @ECHO off
+if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.
 @ECHO.
 @ECHO.
@@ -24,12 +25,14 @@ CALL mvn -DpushChanges=false release:clean release:prepare
 @ECHO on
 git push origin master
 @ECHO off
+if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.
 @ECHO.
 @ECHO Pushing tag %1 to repository...
 @ECHO on
 git push origin %1
 @ECHO off
+if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.
 @ECHO.
 @ECHO Performing release...
@@ -37,6 +40,7 @@ git push origin %1
 @echo on
 CALL mvn release:perform
 @ECHO off
+if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.
 @ECHO.
 @ECHO Done.
@@ -83,8 +87,12 @@ if NOT [%2]==[] goto usage
 @ECHO.
 @ECHO on
 CALL mvn release:rollback
+@ECHO off
+if %errorlevel% neq 0 exit /b %errorlevel%
+@ECHO on
 CALL mvn release:clean
 @ECHO off
+if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.
 GOTO :eof
 :usage
