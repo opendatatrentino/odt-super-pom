@@ -1,9 +1,7 @@
-@echo off
-
 if [%1]==[] goto usage
-@echo This should not execute
-
-
+@ECHO
+@ECHO
+@ECHO ****  GOING TO RELEASE WITH TAG %1
 @ECHO
 @ECHO
 @ECHO Preparing release...
@@ -17,8 +15,8 @@ mvn -DpushChanges=false release:clean release:prepare
 git push origin master
 @ECHO
 @ECHO
-@ECHO Pushing tag $1 to repository...
-git push origin $1
+@ECHO Pushing tag %1 to repository...
+git push origin %1
 @ECHO
 @ECHO
 @ECHO Performing release...
@@ -29,5 +27,5 @@ mvn release:perform
 @ECHO Done.
 GOTO :eof
 :usage
-@ECHO Usage: %0 ^<artifactId-x.y.z^>
-exit /B 1
+@ECHO Usage: %0 ^<mytag-x.y.z^>
+EXIT /B 1
