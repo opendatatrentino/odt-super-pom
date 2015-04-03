@@ -5,7 +5,8 @@ if [%1]==[-frb] goto :forced-rollback
 if [%1]==[-mrb] goto :maven-rollback 
 SET firstArg=%1
 if [%firstArg:~,1%]==[-] goto :wrong-tag
-if NOT [%2]==[] goto usage
+if [%2]==[] goto usage
+if NOT [%3]==[] goto usage
 @ECHO.	
 @ECHO.
 @ECHO ****  GOING TO RELEASE WITH TAG %1
@@ -20,10 +21,10 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.
 @ECHO.
 @ECHO.
-@ECHO Pushing to master...
+@ECHO Pushing to %2...
 @ECHO.
 @ECHO on
-git push origin master
+git push origin %2
 @ECHO off
 if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.
@@ -98,7 +99,7 @@ GOTO :eof
 :usage
 @ECHO Usage: 
 @ECHO.
-@ECHO Do complete release:                              %0 ^<mytag-x.y.z^>
+@ECHO Do complete release:                              %0 ^<mytag-x.y.z^> ^<branch^>
 @ECHO.
 @ECHO Regular maven rollback:                           %0 -mrb
 @ECHO.
