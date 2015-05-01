@@ -39,10 +39,23 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO Performing release...
 @ECHO.
 @echo on
-CALL mvn release:perform
+CALL mvn -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true release:perform
 @ECHO off
 if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.
+REM @ECHO Generating site with Josman...
+REM @echo on
+REM CALL mvn josman:site
+REM @ECHO off
+REM if %errorlevel% neq 0 exit /b %errorlevel%
+REM @ECHO.
+REM @ECHO.
+REM @ECHO Sending website to Github pages...
+REM @echo on
+REM CALL mvn josman:site
+REM @ECHO off
+REM if %errorlevel% neq 0 exit /b %errorlevel%
+REM @ECHO.
 @ECHO.
 @ECHO Done.
 GOTO :eof
