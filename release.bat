@@ -47,7 +47,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 CALL mvn -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true release:perform
 @ECHO off
 if %errorlevel% neq 0 exit /b %errorlevel%
-IF %PUBLISH_SITE%==[true](
+IF [%PUBLISH_SITE%]==[true] (
     @ECHO.
     @ECHO Generating site with Josman...
     @echo on
@@ -58,8 +58,7 @@ IF %PUBLISH_SITE%==[true](
     @ECHO.
     @ECHO Sending website to Github pages... (this may take some time)
     @echo on
-    @echo mvn com.github.github:site-maven-plugin:site
-    EXIT 1 
+    @echo mvn com.github.github:site-maven-plugin:site    
     @ECHO off
     if %errorlevel% neq 0 exit /b %errorlevel%
 )
