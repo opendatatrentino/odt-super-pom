@@ -4,7 +4,7 @@
     
     <groupId>eu.trentorise.opendata.commons</groupId>
     <artifactId>odt-super-pom</artifactId>
-    <version>1.0.15-SNAPSHOT</version>
+    <version>1.0.15</version>
     <packaging>pom</packaging>    
     
     <name>Odt Super POM</name>
@@ -318,7 +318,7 @@
                     <version>0.11</version>
                     <configuration>        
                         <message>Creating site for ${project.version}</message>
-                        <noJekyll/>
+                        <noJekyll />
                         <force>true</force>
                         <merge>false</merge>
                     </configuration>
