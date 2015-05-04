@@ -58,7 +58,7 @@ IF [%PUBLISH_SITE%]==[true] (
     @ECHO.
     @ECHO Sending website to Github pages... (this may take some time)
     @echo on
-    @echo mvn com.github.github:site-maven-plugin:site    
+    CALL mvn com.github.github:site-maven-plugin:site    
     @ECHO off
     if %errorlevel% neq 0 exit /b %errorlevel%
 )
