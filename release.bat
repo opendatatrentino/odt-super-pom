@@ -1,8 +1,13 @@
 @ECHO off
 @ECHO.
+SET PUBLISH_SITE=true
 if [%1]==[] goto usage
 if [%1]==[-frb] goto :forced-rollback
-if [%1]==[-mrb] goto :maven-rollback 
+if [%1]==[-mrb] goto :maven-rollback
+if [%1]==[-nosite] (
+    SET PUBLISH_SITE=false
+    shift
+)
 SET firstArg=%1
 if [%firstArg:~,1%]==[-] goto :wrong-tag
 if [%2]==[] goto usage
@@ -42,20 +47,23 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 CALL mvn -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true release:perform
 @ECHO off
 if %errorlevel% neq 0 exit /b %errorlevel%
+IF %PUBLISH_SITE%==[true](
+    @ECHO.
+    @ECHO Generating site with Josman...
+    @echo on
+    CALL mvn josman:site
+    @ECHO off
+    if %errorlevel% neq 0 exit /b %errorlevel%
+    @ECHO.
+    @ECHO.
+    @ECHO Sending website to Github pages... (this may take some time)
+    @echo on
+    @echo mvn com.github.github:site-maven-plugin:site
+    EXIT 1 
+    @ECHO off
+    if %errorlevel% neq 0 exit /b %errorlevel%
+)
 @ECHO.
-REM @ECHO Generating site with Josman...
-REM @echo on
-REM CALL mvn josman:site
-REM @ECHO off
-REM if %errorlevel% neq 0 exit /b %errorlevel%
-REM @ECHO.
-REM @ECHO.
-REM @ECHO Sending website to Github pages...
-REM @echo on
-REM CALL mvn josman:site
-REM @ECHO off
-REM if %errorlevel% neq 0 exit /b %errorlevel%
-REM @ECHO.
 @ECHO.
 @ECHO Done.
 GOTO :eof
@@ -112,12 +120,13 @@ GOTO :eof
 :usage
 @ECHO Usage: 
 @ECHO.
-@ECHO Do complete release:                              %0 ^<mytag-x.y.z^> ^<branch^>
+@ECHO Do complete release:                              %0 [-nosite] ^<mytag-x.y.z^> ^<branch^>
 @ECHO.
 @ECHO Regular maven rollback:                           %0 -mrb
 @ECHO.
 @ECHO Forced cleaning (only if maven rollback fails):   %0 -frb ^<mytag-x.y.z^>
 @ECHO.
+
 EXIT /B 1
 :wrong-tag
 @ECHO Provided tag is wrong!

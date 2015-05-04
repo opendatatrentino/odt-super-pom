@@ -23,7 +23,7 @@ Releases of the POM are on Central. To use it in your project, just write this i
     <parent>
         <groupId>eu.trentorise.opendata.commons</groupId>
         <artifactId>odt-super-pom</artifactId>
-        <version>THE_VERSION</version>
+        <version>#{version}</version>
     </parent>
 ```
 
@@ -47,7 +47,12 @@ and copy plugins list like in [Odt Commons pom](https://github.com/opendatatrent
     </build>
 ```
 
-TODO put other things to copy!!!
+Make sure to put a url tag with the correct github addreass, i.e.:
+```
+ <url>https://github.com/opendatatrentino/odt-commons</url>
+```
+
+TODO write other things to copy
 
 ### Deploy prerequisites
 
@@ -71,6 +76,9 @@ TODO write something
 
 #### 3. Edit Maven settings.xml
 
+You will need to edit `.m2/settings.xml` of your user home to add passwords for Sonatype, Github and GPG
+
+##### Sonatype
 
 Put this in the `<servers>` section in `.m2/settings.xml` of your user home:
 
@@ -86,16 +94,39 @@ Put this in the `<servers>` section in `.m2/settings.xml` of your user home:
         <username>YOUR_SONATYPE_USERNAME</username>
         <password>YOUR_PASSWORD</password>
     </server>
-
-	<server>
+    
+    <server>
       <id>ossrh</id>
         <username>YOUR_SONATYPE_USERNAME</username>
         <password>YOUR_PASSWORD</password>
     </server>
-
 ```
 
-Put this in the `<profiles>` section in `.m2/settings.xml` of your user home:
+##### GitHub access
+
+For publishing websites to Gitub pages, you also need to put Github server OAuth token in `settings.xml`. 
+NOTE: anybody with the OAuth token to programmatically access all of your 
+repositories with the given permissions. As such, it is not ideal but it's the simplest to start with. 
+
+To get the token:
+- Go to https://github.com/settings/applications 
+- Go to `personal access tokens -> Generate new token`, and give only the following permissions :
+    - repo
+    - public_repo 
+    - user:email
+           
+Put this in the `<servers>` section in `.m2/settings.xml` of your user home:
+
+```
+    <server>
+          <id>github</id>
+          <password>YOUR_OAUTH_TOKEN_HERE</password>
+    </server>
+```
+
+##### GPG
+
+To allow signing artifacts, put this in the `<profiles>` section in `.m2/settings.xml` of your user home:
 
 ```
 	<profile>
@@ -115,7 +146,7 @@ Put this in the `<profiles>` section in `.m2/settings.xml` of your user home:
 Before attempting deployment, make sure you meet the [Deploy prerequisites](#deploy-prerequisites).
 
 Snapshots are deployed on Sonatype:
-<a href="https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/" target="_blank">https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/odt-super-pom/</a>
+<a href="https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/" target="_blank">https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/odt-super-pom </a>
 
 with this command:
 
@@ -126,7 +157,7 @@ with this command:
 In Netbeans, you can also:
 
 ```
-right click on the project -> Custom -> Deploy to Sonatype
+    right click on the project -> Custom -> Deploy to Sonatype
 ```
 
 

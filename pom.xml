@@ -31,8 +31,8 @@
     </licenses>
     
     <properties>
-        <scmUrl>${project.url}</scmUrl>
-        
+        <scmUrl>${project.url}</scmUrl>            
+        <github.global.server>github</github.global.server>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <odt-commons.findbugs.version>
@@ -304,12 +304,39 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>         
+                </plugin>    
+                
+                <plugin>
+                    <groupId>eu.trentorise.opendata.josman</groupId>
+                    <artifactId>josman-maven-plugin</artifactId>
+                    <version>0.6.0</version>
+                </plugin>
+                
+                <plugin>
+                    <groupId>com.github.github</groupId>
+                    <artifactId>site-maven-plugin</artifactId>
+                    <version>0.11</version>
+                    <configuration>        
+                        <message>Creating site for ${project.version}</message>
+                        <noJekyll/>
+                        <force>true</force>
+                        <merge>false</merge>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>site</goal>
+                            </goals>                        
+                        </execution>
+                    </executions>
+                </plugin>                  
+                                       
             </plugins>                   
                 
             
         </pluginManagement>         
-        
+                       
+                                
         <plugins>
             <!--
                the versions plugin can be used to check for new plugin versions like this:
@@ -322,6 +349,8 @@
                 <version>2.1</version>
             </plugin>
         </plugins>  
+        
+
         
         <resources>
             <resource>
@@ -344,6 +373,16 @@
             </resource>            
         </resources>          
     </build>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>eu.trentorise.opendata.commons</groupId>
+                <artifactId>odt-commons</artifactId>
+                <version> 1.0.2</version>                
+            </dependency>
+        </dependencies>
+    </dependencyManagement>    
     
     <reporting>
         
