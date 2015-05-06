@@ -4,7 +4,7 @@
     
     <groupId>eu.trentorise.opendata.commons</groupId>
     <artifactId>odt-super-pom</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>    
     
     <name>Odt Super POM</name>
@@ -418,13 +418,13 @@
             <dependency>
                 <groupId>eu.trentorise.opendata.commons</groupId>
                 <artifactId>odt-commons</artifactId>
-                <version> 1.0.3-SNAPSHOT</version>                
+                <version> 1.0.3</version>                
             </dependency>
             
             <dependency>
                 <groupId>eu.trentorise.opendata.traceprov</groupId>
                 <artifactId>traceprov</artifactId>
-                <version>0.3.0-SNAPSHOT</version>                
+                <version>0.3.0</version>                
             </dependency>
             
             <dependency>

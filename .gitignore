@@ -5,6 +5,9 @@
 .com.apple.timemachine.supported
 .import-temp/
 
+/release.properties
+/pom.xml.releaseBackup
+
 target/
 
 ##### INTELLIJ
