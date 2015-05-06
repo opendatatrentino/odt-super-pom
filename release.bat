@@ -44,7 +44,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO Performing release...
 @ECHO.
 @echo on
-CALL mvn -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true release:perform
+CALL mvn -Dhttps.protocols=SSLv3 -Dforce.http.jre.executor=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true release:perform
 @ECHO off
 if %errorlevel% neq 0 exit /b %errorlevel%
 @ECHO.

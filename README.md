@@ -52,7 +52,17 @@ Make sure to put a url tag with the correct github addreass, i.e.:
  <url>https://github.com/opendatatrentino/odt-commons</url>
 ```
 
-TODO write other things to copy
+And put the scm:
+
+```
+   <scm>
+        <url>${project.url}</url>
+        <connection>scm:git:${project.url}.git</connection>
+        <developerConnection>scm:git:${project.url}.git</developerConnection>        
+        <tag>HEAD</tag>
+   </scm>
+```
+
 
 ### Deploy prerequisites
 
@@ -165,6 +175,8 @@ In Netbeans, you can also:
 
 Before attempting release, make sure you meet the [Deploy prerequisites](#deploy-prerequisites).
 
+#### Release with .bat file
+
 So far we only tried releasing from a Windows environment. Since Windows, Maven and Git don't play well together, we made a [release.bat file](release.bat) to ease the process. You can use the bat for this or other odt projects.
 
 To print help, just type the command:
@@ -180,6 +192,37 @@ path\to\release.bat my-program-1.2.3
 
 If something goes wrong along the way just run `release.bat` to see help on how to recover.
 
+By default the release will generate website with josman and try to send it to GitHub `gh-pages` branch. To prevent such behaviour, add -nosite parameter to the bat.
+
+
+#### Manual release workflow
+
+TODO make this a proper bash script
+
+Ideal commands workflow:
+```
+    mvn release:clean
+    mvn release:prepare
+    mvn release:perform
+```
+
+Workflow when having problems with git: 
+```
+    mvn -DpushChanges=false release:clean release:prepare
+    git push origin master
+    git push origin PUT_REPO_NAME-X.Y.Z    
+    release:perform
+```
+
+To make website:
+```
+mvn josman:site
+```
+
+To send website to gh-pages branch: 
+```
+mvn com.github.github:site-maven-plugin:site  
+```
 
 #### Credits
 
