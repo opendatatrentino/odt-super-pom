@@ -78,6 +78,13 @@ if NOT [%3]==[] goto usage
 @ECHO *******  FORCING ROLLING BACK OF MESSED UP RELEASE %2....
 @ECHO.
 @ECHO.
+@ECHO.
+@ECHO Removing  pom.xml.releaseBackup ...
+DEL  pom.xml.releaseBackup
+@ECHO Removing release.properties
+DEL release.properties
+@ECHO.
+@ECHO.
 @ECHO Removing local tag %2  ...
 @echo on
 git tag -d %2
@@ -87,13 +94,6 @@ git tag -d %2
 @ECHO.
 git push origin :refs/tags/%2
 @ECHO. off
-@ECHO.
-@ECHO Removing  pom.xml.releaseBackup ...
-DEL  pom.xml.releaseBackup
-@ECHO Removing release.properties
-DEL release.properties
-@ECHO.
-@ECHO.
 @ECHO Now you may need to do a 
 @ECHO.
 @ECHO         git reset --hard X  
