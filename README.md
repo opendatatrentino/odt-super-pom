@@ -185,9 +185,9 @@ To print help, just type the command:
 release.bat
 ```
 
-To release `my-program` with version `1.2.3` , from your project root run `release.bat` followed by the release tag:
+To release `my-program` with version `1.2.3` , from your project root run `release.bat` followed by the release tag and the branch where you want to push:
 ```
-path\to\release.bat my-program-1.2.3
+path\to\release.bat my-program-1.2.3 master
 ```
 
 If something goes wrong along the way just run `release.bat` to see help on how to recover.
@@ -210,7 +210,7 @@ Workflow when having problems with git:
 ```
     mvn -DpushChanges=false release:clean release:prepare
     git push origin master
-    git push origin PUT_REPO_NAME-X.Y.Z    
+    git push origin PUT_REPO_NAME-X.Y.Z
     release:perform
 ```
 
@@ -219,9 +219,9 @@ To make website:
 mvn josman:site
 ```
 
-To send website to gh-pages branch: 
+To send website to gh-pages branch:
 ```
-mvn com.github.github:site-maven-plugin:site  
+mvn com.github.github:site-maven-plugin:site
 ```
 
 #### Credits
