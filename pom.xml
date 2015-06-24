@@ -432,9 +432,23 @@
             <dependency>
                 <groupId>eu.trentorise.opendata.commons</groupId>
                 <artifactId>odt-commons</artifactId>
-                <version> 1.0.3</version>                
+                <version>1.0.4-SNAPSHOT</version>                
+            </dependency>
+
+            <dependency>
+                <groupId>eu.trentorise.opendata.commons</groupId>
+                <artifactId>odt-commons-jackson</artifactId>
+                <version> 1.0.4-SNAPSHOT</version>                
             </dependency>
             
+            <dependency>
+                <groupId>eu.trentorise.opendata.commons</groupId>
+                <artifactId>odt-commons-jackson</artifactId>                    
+                <type>test-jar</type>
+                <version> 1.0.4-SNAPSHOT</version>
+            </dependency>            
+            
+                                    
             <dependency>
                 <groupId>eu.trentorise.opendata.traceprov</groupId>
                 <artifactId>traceprov</artifactId>
@@ -455,11 +469,6 @@
                 <optional>true</optional>
             </dependency>            
             
-            <dependency>
-                <groupId>eu.trentorise.opendata.commons</groupId>
-                <artifactId>odt-commons-jackson</artifactId>
-                <version> 1.0.2</version>                
-            </dependency>
 
 
 
