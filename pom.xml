@@ -37,8 +37,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <netbeans.hint.license>apache20</netbeans.hint.license>     
         <maven.version>3.0.4</maven.version>            
-        <jackson2.version>2.4.2</jackson2.version>    
+        <jackson2.version>2.6.0</jackson2.version>    
         <slf4j.version>1.7.7</slf4j.version>
+        <odt.commons.jackson.version>1.1.0-SNAPSHOT</odt.commons.jackson.version>
     </properties>    
     
     
@@ -192,6 +193,8 @@
                     </configuration>
                 </plugin>                     
 
+                <!-- added proc:none to speed up annotation processing according to https://github.com/mkarneim/pojobuilder/wiki/Incremental-Compilation-and-Maven
+                -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -199,9 +202,31 @@
                     <configuration>
                         <source>1.7</source>
                         <target>1.7</target>
+                      <!-- in theory according to https://github.com/mkarneim/pojobuilder/wiki/Incremental-Compilation-and-Maven
+                it should speed up annotation processing but it doesn't work
+                        <compilerArgument>-proc:none</compilerArgument> -->
                     </configuration>
                 </plugin>
             
+            
+                <!-- in theory according to https://github.com/mkarneim/pojobuilder/wiki/Incremental-Compilation-and-Maven
+                it should speed up annotation processing but it doesn't work 
+               
+                <plugin>
+                    <groupId>org.bsc.maven</groupId>
+                    <artifactId>maven-processor-plugin</artifactId>
+                    <version>2.2.4</version>
+                    <executions>
+                        <execution>
+                            <id>process</id>
+                            <goals>
+                                <goal>process</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                        </execution>
+                    </executions>
+                </plugin>   -->
+                                    
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -238,7 +263,19 @@
                             </goals>
                             <configuration>
                                 <sources>
-                                    <source>${project.build.directory}/generated-sources/annotations</source>                                 
+                                    <source>${project.build.directory}/generated-sources/annotations</source> 
+                                </sources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>add-test-sources</id>
+                            <phase>generate-test-sources</phase>
+                            <goals>
+                                <goal>add-test-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>${project.build.directory}/generated-sources/test-annotations</source>
                                 </sources>
                             </configuration>
                         </execution>
@@ -398,6 +435,7 @@
                 <filtering>true</filtering>
             </resource>
             <resource>
+                <!-- REMEMBER: FOR SOME REASON MAVEN WILL NOT COPY STUFF IN src/main/java/** -->
                 <directory>src/main/resources/</directory>
                 <includes>
                     <include>**</include>
@@ -455,15 +493,9 @@
             <dependency>
                 <groupId>eu.trentorise.opendata.commons</groupId>
                 <artifactId>odt-commons-jackson</artifactId>
-                <version> 1.0.4-SNAPSHOT</version>                
+                <version> ${odt.commons.jackson.version}</version>                
             </dependency>
-            
-            <dependency>
-                <groupId>eu.trentorise.opendata.commons</groupId>
-                <artifactId>odt-commons-jackson</artifactId>                    
-                <type>test-jar</type>
-                <version> 1.0.4-SNAPSHOT</version>
-            </dependency>            
+                     
             
                                     
             <dependency>
@@ -628,7 +660,13 @@
                 </exclusions>    
             </dependency>                                                
             
-                
+            <dependency>
+                <groupId>eu.trentorise.opendata.commons</groupId>
+                <artifactId>odt-commons-jackson</artifactId>                    
+                <type>test-jar</type>
+                <version> ${odt.commons.jackson.version}</version>
+            </dependency>  
+            
         </dependencies>
     </dependencyManagement>    
     
