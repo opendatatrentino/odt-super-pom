@@ -203,6 +203,9 @@
                     <configuration>
                         <source>1.7</source>
                         <target>1.7</target>
+                        <!-- more or less this should help. Notice 'false' here 'actually means 'true', because Maven incremental compilation is just broken (sic) -->                
+                        <useIncrementalCompilation>false</useIncrementalCompilation>
+                
                       <!-- in theory according to https://github.com/mkarneim/pojobuilder/wiki/Incremental-Compilation-and-Maven
                 it should speed up annotation processing but it doesn't work
                         <compilerArgument>-proc:none</compilerArgument> -->
