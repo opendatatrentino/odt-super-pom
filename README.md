@@ -1,9 +1,9 @@
 
-Open Data in Trentino Super POM
+Trentino Open Data Super POM
 
 Super POM used by Open Data in Trentino Java projects.
 
-For common library toolkit see [Odt Commons](https://github.com/opendatatrentino/odt-commons)
+For common library toolkit see [Tod Commons](https://github.com/opendatatrentino/tod-commons)
 
 
 [Usage](#usage)
@@ -21,13 +21,13 @@ Releases of the POM are on Central. To use it in your project, just write this i
 
 ```
     <parent>
-        <groupId>eu.trentorise.opendata.commons</groupId>
-        <artifactId>odt-super-pom</artifactId>
+        <groupId>eu.trentorise.opendata</groupId>
+        <artifactId>tod-super-pom</artifactId>
         <version>#{version}</version>
     </parent>
 ```
 
-and copy plugins list like in [Odt Commons pom](https://github.com/opendatatrentino/odt-commons/blob/master/pom.xml):
+and copy plugins list like in [Tod Commons pom](https://github.com/opendatatrentino/tod-commons/blob/master/pom.xml):
 
 ```
   <build>
@@ -49,7 +49,7 @@ and copy plugins list like in [Odt Commons pom](https://github.com/opendatatrent
 
 Make sure to put a url tag with the correct github addreass, i.e.:
 ```
- <url>https://github.com/opendatatrentino/odt-commons</url>
+ <url>https://github.com/opendatatrentino/tod-commons</url>
 ```
 
 And put the scm:
@@ -68,7 +68,7 @@ And put the scm:
 
 So far we only tried releasing from a Windows environment. Since Windows, Maven, Git and GPG don't play well together, we resorted to putting passwords in clear in maven `.m2/settings.xml` (which is not much secure..) and made a `bat` script to ease the process.
 
-To deploy to Sonatype any odt project, you need this prerequisites:
+To deploy to Sonatype any tod project, you need this prerequisites:
 
 1. Register on sonatype to have username/passoword.
 2. Create GPG keys
@@ -156,7 +156,7 @@ To allow signing artifacts, put this in the `<profiles>` section in `.m2/setting
 Before attempting deployment, make sure you meet the [Deploy prerequisites](#deploy-prerequisites).
 
 Snapshots are deployed on Sonatype:
-<a href="https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/" target="_blank">https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/odt-super-pom </a>
+<a href="https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/" target="_blank">https://oss.sonatype.org/content/repositories/snapshots/eu/trentorise/opendata/commons/tod-super-pom </a>
 
 with this command:
 
@@ -177,7 +177,7 @@ Before attempting release, make sure you meet the [Deploy prerequisites](#deploy
 
 #### Release with .bat file
 
-So far we only tried releasing from a Windows environment. Since Windows, Maven and Git don't play well together, we made a [release.bat file](release.bat) to ease the process. You can use the bat for this or other odt projects.
+So far we only tried releasing from a Windows environment. Since Windows, Maven and Git don't play well together, we made a [release.bat file](release.bat) to ease the process. You can use the bat for this or other tod projects.
 
 To print help, just type the command:
 
@@ -198,6 +198,12 @@ By default the release will generate website with josman and try to send it to G
 #### Manual release workflow
 
 TODO make this a proper bash script
+
+To check website docs before releasing:
+```
+mvn josman:site -Dsite.snapshot=true
+```
+
 
 Ideal commands workflow:
 ```
