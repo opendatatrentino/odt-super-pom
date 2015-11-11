@@ -133,6 +133,12 @@ Put this in the `<servers>` section in `.m2/settings.xml` of your user home:
           <password>YOUR_OAUTH_TOKEN_HERE</password>
     </server>
 ```
+#### SSH keys
+
+It may well happen that while releasing your maven hangs asking for a github password. To prevent this under linux you can set up ssh-agent with the following procedure: 
+https://help.github.com/articles/generating-ssh-keys/
+
+I couldn't manage to have ssh-agent working in Windows, so for windows release.bat requires more manual entering of passwords during execution. 
 
 ##### GPG
 

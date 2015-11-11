@@ -1,0 +1,143 @@
+#!/bin/bash
+
+echo 
+echo
+echo
+echo "	********************************  TOD RELEASER   ***************************************"
+
+PUBLISH_SITE=true
+
+function usage(){
+	echo "
+	Usage: 
+	
+	Do complete release:                              release [-nosite] ^<mytag-x.y.z^> ^<branch^>
+	
+	Regular maven rollback:                           release -mrb
+	
+	Forced cleaning (only if maven rollback fails):   release -frb ^<mytag-x.y.z>^
+	"
+	exit 1
+}
+
+function website(){
+	echo
+	echo "*******  TOD RELEASER:  Generating site with Josman..."
+	echo on
+	mvn josman:site
+	if [  $? -ne 0 ]; then echo "command failed"; exit 1; fi
+	echo off
+	echo
+	echo
+	echo "Sending website to Github pages... (this may take some time)"
+	echo on
+	mvn com.github.github:site-maven-plugin:site	
+	if [  $? -ne 0 ]; then echo "command failed"; exit 1; fi
+	echo off
+	echo
+	echo
+	echo Done.
+	exit
+}
+function forcedRollback(){
+	if [[ -z $2 ]]; then usage; fi
+	if [[ -n $3 ]]; then usage; fi
+	echo
+	echo
+	echo "*******  TOD RELEASER:  FORCING ROLLING BACK OF MESSED UP RELEASE $2...."
+	echo
+	echo
+	echo
+	echo Removing  pom.xml.releaseBackup ...
+	rm  pom.xml.releaseBackup
+	echo Removing release.properties
+	rm release.properties
+	echo
+	echo
+	echo Removing local tag $2  ...
+	echo on
+	git tag -d $2
+	echo off
+	echo Removing github tag $2  ...
+	echo on
+	echo
+	git push origin :refs/tags/$2
+	echo off
+	echo Now you may need to do a 
+	echo
+	echo         git reset --hard X  
+	echo
+	echo Where X is the commit SHA of the commit you want to rollback to. 
+	echo
+	echo "*******  TOD RELEASER: CAREFUL: USING GIT REHARD WITH WRONG COMMIT WILL MAKE YOU LOSE ALL SUBSEQUENT COMMITS!!!!! *****"
+	echo
+	exit
+}
+
+function mavenRollback(){ 
+	if [[ -n $2 ]]; then usage; fi
+	echo
+	echo
+	echo "*******  TOD RELEASER:   REGULAR MAVEN ROLLABACK...."
+	echo
+	echo
+	echo on
+	mvn release:rollback	
+	if [  $? -ne 0 ]; then echo "command failed"; exit 1; fi
+	echo on
+	mvn release:clean
+	echo off
+	if [  $? -ne 0 ]; then echo "command failed"; exit 1; fi
+	echo
+	exit
+}
+
+
+
+
+function wrongTag(){
+	echo "*******  TOD RELEASER:   PROVIDED TAG IS WRONG!"
+	exit 1
+}
+
+echo
+
+if [[ -z $1 ]]; then usage; fi
+if [ $1 = "-frb" ];  then forcedRollback; fi
+if [ $1 = "-mrb" ];  then mavenRollback; fi
+if [ $1 = "-nosite" ]; then  
+    PUBLISH_SITE=false
+    shift
+fi
+firstArg=$1
+if [ ${firstArg:0:1} = "-" ]; then wrongTag; fi
+if [[ -z $2 ]];  then usage; fi
+if [[ -n $3 ]]; then usage; fi
+echo	
+echo
+echo "******  TOD RELEASER:  GOING TO RELEASE WITH TAG $1 "
+echo
+echo
+echo "******  TOD RELEASER: PREPARING RELEASE..."
+echo
+echo on
+mvn release:clean release:prepare 
+if [  $? -ne 0 ]; then echo "command failed"; exit 1; fi
+echo off
+echo
+echo
+echo
+echo "******  TOD RELEASER: PERFORMING RELEASE..."
+echo
+echo on
+mvn -Dhttps.protocols=SSLv3 -Dforce.http.jre.executor=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true release:perform
+if [  $? -ne 0 ]; then echo "command failed"; exit 1; fi
+echo off
+echo
+echo
+echo "******  TOD RELEASER: DONE ."
+echo
+echo
+echo
+if [ $PUBLISH_SITE = "true" ];  then website; fi
+exit
