@@ -181,9 +181,14 @@ In Netbeans, you can also:
 
 Before attempting release, make sure you meet the [Deploy prerequisites](#deploy-prerequisites).
 
-#### Release with .bat file
+So far we tried releasing from a Windows and a Linux environment. Since Windows, Maven and Git don't play well together, we made a [release.bat file](release.bat) to ease the process. You can use the script for this or other tod projects.
 
-So far we only tried releasing from a Windows environment. Since Windows, Maven and Git don't play well together, we made a [release.bat file](release.bat) to ease the process. You can use the bat for this or other tod projects.
+
+#### Release with bash file
+
+todo describe. For now you can refer to following paragraph, just use `release` instead of `release.bat`
+
+#### Release with .bat file
 
 To print help, just type the command:
 

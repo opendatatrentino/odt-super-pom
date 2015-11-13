@@ -1,5 +1,14 @@
 ## Trentino Open Data Super POM
 
+### 1.4.0
+
+todo
+
+- added tod.commons.version property
+- removed tod.commons.jackson.version property
+- upgraded:
+	* to github plugin 0.12 todo, probably there are better ones
+-	  
 
 ### 1.3.0
 
