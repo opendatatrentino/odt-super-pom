@@ -39,9 +39,10 @@ function website(){
 	echo Done.
 	exit
 }
+
+# first parameter is something like TAGNAME-X.Y.Z
 function forcedRollback(){
-	if [[ -z $2 ]]; then usage; fi
-	if [[ -n $3 ]]; then usage; fi
+	if [ -z $1 ]; then usage; fi	
 	echo
 	echo
 	echo "*******  TOD RELEASER:  FORCING ROLLING BACK OF MESSED UP RELEASE $2...."
@@ -54,22 +55,27 @@ function forcedRollback(){
 	rm release.properties
 	echo
 	echo
-	echo Removing local tag $2  ...
+	echo Removing local tag $1  ...
 	echo on
-	git tag -d $2
+	git tag -d $1
 	echo off
-	echo Removing github tag $2  ...
+	echo Removing github tag $1  ...
 	echo on
 	echo
-	git push origin :refs/tags/$2
+	git push origin :refs/tags/$1
 	echo off
-	echo Now you may need to do a 
+	echo Now you may need to do: 
 	echo
-	echo         git reset --hard X  
+	echo "        	git reset --hard X  "
 	echo
-	echo Where X is the commit SHA of the commit you want to rollback to. 
+	echo Followed by
+	echo		
+	echo "  		git push -f origin BRANCH"
 	echo
-	echo "*******  TOD RELEASER: CAREFUL: USING GIT REHARD WITH WRONG COMMIT WILL MAKE YOU LOSE ALL SUBSEQUENT COMMITS!!!!! *****"
+	echo "Where X is the commit SHA of the commit you want to rollback to. "
+	echo "Where BRANCH is the branch name (i.e. master   or   jackan-0.4 )" 
+	echo
+	echo "*******  TOD RELEASER: CAREFUL: USING GIT RESET HARD WITH WRONG COMMIT WILL MAKE YOU LOSE ALL SUBSEQUENT COMMITS!!!!! *****"
 	echo
 	exit
 }
@@ -103,7 +109,7 @@ function wrongTag(){
 echo
 
 if [[ -z $1 ]]; then usage; fi
-if [ $1 = "-frb" ];  then forcedRollback; fi
+if [ $1 = "-frb" ];  then forcedRollback $2; fi
 if [ $1 = "-mrb" ];  then mavenRollback; fi
 if [ $1 = "-nosite" ]; then  
     PUBLISH_SITE=false
