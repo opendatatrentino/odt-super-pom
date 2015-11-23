@@ -1,5 +1,8 @@
 ## Trentino Open Data Super POM
 
+Webiste: https://github.com/opendatatrentino/tod-super-pom
+
+
 ### 1.4.0
 
 todo
@@ -8,7 +11,7 @@ todo
 - removed tod.commons.jackson.version property
 - upgraded:
 	* to github plugin 0.12 todo, probably there are better ones
--	  
+- added Jackan dep
 
 ### 1.3.0
 
