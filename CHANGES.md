@@ -5,8 +5,9 @@ Webiste: https://github.com/opendatatrentino/tod-super-pom
 
 ### 1.4.0
 
-todo
+todo in progress
 
+- upgraded tod-commons to 2.0.0
 - added tod.commons.version property
 - removed tod.commons.jackson.version property
 - upgraded:
